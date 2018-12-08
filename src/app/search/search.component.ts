@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  private query = 'p';
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  public updateResult(query: string): void {
+    this.query = query;
   }
 
 }

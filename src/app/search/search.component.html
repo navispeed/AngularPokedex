@@ -1,1 +1,13 @@
-<app-input></app-input>
+<section class="hero is-pokemon">
+  <div class="hero-body">
+    <div class="container">
+      <app-input (onRequest)="updateResult($event)"></app-input>
+    </div>
+  </div>
+</section>
+
+<br>
+<section id="result is-grey">
+  <app-results *ngIf="query.length != 0" [query]="query"></app-results>
+</section>
+

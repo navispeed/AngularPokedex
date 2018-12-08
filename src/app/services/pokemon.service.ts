@@ -5,8 +5,8 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/mergeMap';
 import {forkJoin} from 'rxjs/observable/forkJoin';
 import {HttpClient} from '@angular/common/http';
-import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 import {environment} from 'environments/environment';
+import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 
 @Injectable({
   providedIn: 'root'
@@ -31,15 +31,21 @@ export class PokemonService {
 
   public getPokemonNameList(limit = false): Observable<GetAllPokemonNames.RootObject> {
     return this.http.get('https://pokeapi.co/api/v2/pokemon/').map((r: GetAllPokemonNames.RootObject) => {
+      r.results = r.results.filter(p => !this.isCustomPokemon(p));
       r.results.sort((a, b) => a.name.localeCompare(b.name));
       if (limit) {
         r.results = r.results.slice(0, environment.maxResultPerQuery);
       }
+      console.log(r);
       return r;
     });
   }
 
-  private extractIdFromPokemon(pokemon: GetAllPokemonNames.Pokemon): number {
+  public extractIdFromPokemon(pokemon: GetAllPokemonNames.Pokemon): number {
     return parseInt(pokemon.url.match(/.+\/(\d+)\//)[1], 10);
+  }
+
+  private isCustomPokemon(pokemon: GetAllPokemonNames.Pokemon): boolean {
+    return pokemon.name.indexOf('-') !== -1;
   }
 }

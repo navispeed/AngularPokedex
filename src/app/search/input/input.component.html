@@ -1,12 +1,10 @@
 <div class="form">
   <div class="field has-addons">
-    <div class="control">
+    <div class="control match-parent">
+      <form class="example-form match-parent">
+        <div class="control match-parent">
 
-
-      <form class="example-form">
-        <div class="control">
-
-          <mat-form-field class="example-full-width">
+          <mat-form-field class="example-full-width match-parent">
             <input matInput placeholder="Pokemon" aria-label="Pokemon" [matAutocomplete]="auto"
                    [formControl]="myControl">
             <mat-autocomplete #auto="matAutocomplete">
@@ -16,7 +14,7 @@
                 <!--<small>Population: {{state.population}}</small>-->
               </mat-option>
             </mat-autocomplete>
-            <button mat-button matSuffix mat-stroked-button aria-label="search" class="button is-info">
+            <button mat-button matSuffix mat-stroked-button aria-label="search" class="button is-info" (click)="onSearchClick()">
               <mat-icon><i class="fa fa-search"></i></mat-icon>
             </button>
           </mat-form-field>

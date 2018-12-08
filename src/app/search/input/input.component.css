@@ -1,7 +1,17 @@
+/*
 div.form {
   position: fixed;
   top: 50%;
   left: 50%;
   margin-top: -50px;
   margin-left: -100px;
+}
+*/
+
+.match-parent {
+  width: 100%;
+}
+
+mat-form-field {
+  color: white;
 }

@@ -36,6 +36,13 @@ export class InputComponent implements OnInit {
       );
   }
 
+  public onSearchClick() {
+    const query = this.myControl.value;
+    if (query !== '') {
+      this.onRequest.emit(query);
+    }
+  }
+
   private _filterPokemon(value: string): Observable<PokemonWithPictureUrl[]> {
     const filterValue = value.toLowerCase();
 
@@ -43,5 +50,4 @@ export class InputComponent implements OnInit {
       .map(pokemons => pokemons.results.map(p => this.inputService.pokemonToPokemonWithPng(p)))
       .map(allPokemon => allPokemon.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0));
   }
-
 }
