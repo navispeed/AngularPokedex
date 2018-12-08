@@ -1,0 +1,50 @@
+<div class="form">
+  <div class="field has-addons">
+    <div class="control">
+
+
+      <form class="example-form">
+        <div class="control">
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Pokemon" aria-label="Pokemon" [matAutocomplete]="auto"
+                   [formControl]="myControl">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let pokemon of filteredPokemon | async" [value]="pokemon.name">
+                <img class="example-option-img" aria-hidden [src]="pokemon.pngUrl" height="35" width="35">
+                <span>{{pokemon.name}}</span>
+                <!--<small>Population: {{state.population}}</small>-->
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-button matSuffix mat-stroked-button aria-label="search" class="button is-info">
+              <mat-icon><i class="fa fa-search"></i></mat-icon>
+            </button>
+          </mat-form-field>
+          <!--<mat-form-field class="example-full-width">-->
+          <!--<input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">-->
+          <!--<mat-autocomplete #auto="matAutocomplete">-->
+          <!--<mat-option *ngFor="let option of options" [value]="option">-->
+          <!--{{option}}-->
+          <!--</mat-option>-->
+          <!--</mat-autocomplete>-->
+          <!--<button mat-button matSuffix mat-stroked-button aria-label="search" class="button is-info">-->
+          <!--<mat-icon><i class="fas fa-search"></i></mat-icon>-->
+          <!--</button>-->
+          <!--</mat-form-field>-->
+
+          <!--<mat-form-field>-->
+          <!--<mat-placeholder>Search reports</mat-placeholder>-->
+          <!--<input matInput type="search">-->
+          <!--<button mat-button matSuffix mat-stroked-button aria-label="search">-->
+          <!--<mat-icon>search</mat-icon>-->
+          <!--</button>-->
+          <!--</mat-form-field>-->
+        </div>
+
+      </form>
+
+      <!--<input class="input" type="text" placeholder="Find a repository">-->
+    </div>
+
+  </div>
+</div>

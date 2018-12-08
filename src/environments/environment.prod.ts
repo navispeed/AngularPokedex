@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  urlPokemonPng: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
+  maxResultPerQuery: 20
 };
