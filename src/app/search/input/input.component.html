@@ -5,7 +5,7 @@
         <div class="control match-parent">
 
           <mat-form-field class="example-full-width match-parent">
-            <input matInput placeholder="Pokemon" aria-label="Pokemon" [matAutocomplete]="auto"
+            <input #query matInput placeholder="Pokemon" aria-label="Pokemon" [matAutocomplete]="auto"
                    [formControl]="myControl">
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let pokemon of filteredPokemon | async" [value]="pokemon.name">
@@ -14,9 +14,9 @@
                 <!--<small>Population: {{state.population}}</small>-->
               </mat-option>
             </mat-autocomplete>
-            <button mat-button matSuffix mat-stroked-button aria-label="search" class="button is-info" (click)="onSearchClick()">
+            <a matSuffix aria-label="search" class="button is-info" [routerLink]="['/search', query.value]">
               <mat-icon><i class="fa fa-search"></i></mat-icon>
-            </button>
+            </a>
           </mat-form-field>
           <!--<mat-form-field class="example-full-width">-->
           <!--<input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">-->

@@ -19,8 +19,7 @@ export class SearchService {
       .map(results => results.results)
       .map(allPokemons => allPokemons.filter(this.match.bind(this, query)))
       .flatMap(allPokemonFiltered => forkJoin(allPokemonFiltered
-        .map(pokemon => this.pokemonService.getById(this.pokemonService.extractIdFromPokemon(pokemon)))))
-      ;
+        .map(pokemon => this.pokemonService.getById(this.pokemonService.extractIdFromPokemon(pokemon)))));
   }
 
   private match(query: String, pokemon: Pokemon | PokemonWithAllProperties): boolean {

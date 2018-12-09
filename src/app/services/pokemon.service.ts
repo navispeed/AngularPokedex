@@ -6,14 +6,16 @@ import 'rxjs/add/operator/mergeMap';
 import {forkJoin} from 'rxjs/observable/forkJoin';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment';
+import {StoreService} from 'app/services/store.service';
 import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
+import 'rxjs/add/operator/share';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storeService: StoreService) {
   }
 
   public downloadAll(): Observable<any> {
@@ -21,12 +23,19 @@ export class PokemonService {
       .flatMap(pokemons =>
         forkJoin(pokemons.results.map(pokemon => this.getById(this.extractIdFromPokemon(pokemon)))))
       .share();
-    observable.subscribe(c => console.log('Download all :', c));
     return observable;
   }
 
   public getById(id: number): Observable<PokemonWithAllProperties> {
-    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).map((r: PokemonWithAllProperties) => r);
+    return this.storeService.getOrElseGet(id, () => {
+      const pokemonWithAllPropertiesObservable = this.http
+        .get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+        .map((r: PokemonWithAllProperties) => r)
+        .share();
+      pokemonWithAllPropertiesObservable.map(p => this.storeService.savePokemonById(id, p))
+        .subscribe(() => this.storeService.save());
+      return pokemonWithAllPropertiesObservable;
+    });
   }
 
   public getPokemonNameList(limit = false): Observable<GetAllPokemonNames.RootObject> {
@@ -36,7 +45,6 @@ export class PokemonService {
       if (limit) {
         r.results = r.results.slice(0, environment.maxResultPerQuery);
       }
-      console.log(r);
       return r;
     });
   }

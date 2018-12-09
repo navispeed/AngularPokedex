@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {FormControl} from '@angular/forms';
 import {flatMap, startWith} from 'rxjs/operators';
@@ -14,8 +14,6 @@ import {PokemonWithPictureUrl} from 'app/search/input/input.model';
   providers: [InputService]
 })
 export class InputComponent implements OnInit {
-  @Output() onRequest = new EventEmitter<String>();
-
   filteredPokemon: Observable<PokemonWithPictureUrl[]>;
   myControl = new FormControl();
 
@@ -34,13 +32,6 @@ export class InputComponent implements OnInit {
             );
         }
       );
-  }
-
-  public onSearchClick() {
-    const query = this.myControl.value;
-    if (query !== '') {
-      this.onRequest.emit(query);
-    }
   }
 
   private _filterPokemon(value: string): Observable<PokemonWithPictureUrl[]> {

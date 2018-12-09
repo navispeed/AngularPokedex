@@ -7,16 +7,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  private query = 'p';
-
   constructor() {
   }
 
   ngOnInit() {
-  }
-
-  public updateResult(query: string): void {
-    this.query = query;
   }
 
 }

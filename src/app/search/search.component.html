@@ -1,13 +1,16 @@
 <section class="hero is-pokemon">
   <div class="hero-body">
     <div class="container">
-      <app-input (onRequest)="updateResult($event)"></app-input>
+      <app-input></app-input>
     </div>
   </div>
 </section>
 
 <br>
-<section id="result is-grey">
-  <app-results *ngIf="query.length != 0" [query]="query"></app-results>
+<section id="result is-grey section">
+  <app-results></app-results>
 </section>
 
+<!--<div class="progress-bar-container">-->
+<!--<progress class="progress is-danger" value="15" max="100">15%</progress>-->
+<!--</div>-->
