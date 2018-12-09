@@ -10,8 +10,8 @@ import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent {
+  public pokemonResult: Array<PokemonWithAllProperties>;
   private query: String;
-  private pokemonResult: Array<PokemonWithAllProperties>;
 
   constructor(private searchService: SearchService, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
