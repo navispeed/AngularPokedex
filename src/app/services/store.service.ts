@@ -38,7 +38,7 @@ export class StoreService {
       const value = Array.from(this.pokemonStore.entries());
       for (let i = 0; i < value.length && i < 9; ++i) {
         i += 20;
-        sessionStorage.setItem('pokemonStore' + parseInt(i / 20, 10), JSON.stringify(value.slice(i, i + 20)));
+        sessionStorage.setItem('pokemonStore' + parseInt((i / 20).toString(10), 10), JSON.stringify(value.slice(i, i + 20)));
       }
       // console.log(JSON.stringify(Array.from(this.pokemonStore.entries())).length);
       sessionStorage.setItem('typeStore', JSON.stringify(Array.from(this.typeStore.entries())));

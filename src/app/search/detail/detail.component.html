@@ -1,6 +1,6 @@
 <section class="section">
-  <div class="container" *ngIf="pokemon">
-    <div class="columns">
+  <div class="container" *ngIf="pokemon && pokemonTypeStat">
+    <div class="columns is-multiline">
       <div class="column is-half is-full-mobile">
         <div class="card">
           <div class="card-content">
@@ -29,18 +29,20 @@
       <div class="column is-half is-full-mobile">
         Twitter
       </div>
-      <div class="column is-half is-full-mobile">
-        <table class="table">
+      <div class="column is-full is-full-mobile">
+        <table class="table is-fullwidth">
           <thead>
           <tr>
             <td>Type</td>
-            <td>Base stat</td>
+            <td *ngFor="let s of pokemonTypeStat[0][1]">{{s.stat.name}}</td>
             <td>Average</td>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let stat of pokemonTypeStat">
-
+            <td><span [ngClass]="generateClassForType(stat[0])">{{stat[0]}}</span></td>
+            <td></td>
+            <td></td>
           </tr>
           </tbody>
         </table>

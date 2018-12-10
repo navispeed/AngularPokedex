@@ -14,6 +14,29 @@ import Stat = Pokemon.Stat;
 })
 export class DetailService {
 
+  private static _color = {
+    'normal': 'is-white',
+    'fighting': 'is-warning',
+    'flying': 'is-primary',
+    'poison': 'is-success',
+    'ground': 'is-dark',
+    'rock': 'is-dark',
+    'bug': 'is-success',
+    'ghost': 'is-dark',
+    'steel': 'is-light',
+    'fire': 'is-danger',
+    'water': 'is-info',
+    'grass': 'is-dark',
+    'electric': 'is-warning',
+    'psychic': 'is-info',
+    'ice': 'is-link',
+    'dragon': 'is-light',
+    'dark': 'is-dark',
+    'fairy': 'is-white',
+    'unknown': 'is-black',
+    'shadow': 'is-dark'
+  };
+
   constructor(private pokemonService: PokemonService, private typeService: TypeService,
               private extractIdFromPokemon: ExtractIdFromPokemon) {
   }
@@ -39,6 +62,10 @@ export class DetailService {
         }
         return retVal;
       });
+  }
+
+  public getColorForType(typeName: string) {
+    return DetailService._color[typeName];
   }
 
   private extractStatForType(pokemonOfType: PokemonWithAllProperties[]) {
