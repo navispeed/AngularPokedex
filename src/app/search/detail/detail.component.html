@@ -1,3 +1,51 @@
-<p>
-  detail works!
-</p>
+<section class="section">
+  <div class="container" *ngIf="pokemon">
+    <div class="columns">
+      <div class="column is-half is-full-mobile">
+        <div class="card">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img [src]="pokemon.sprites.front_default" alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">{{pokemon.name}}</p>
+                <p class="subtitle is-6">{{pokemon.base_experience}}</p>
+              </div>
+            </div>
+
+            <div class="content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+              <a href="#">#css</a> <a href="#">#responsive</a>
+              <br>
+              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half is-full-mobile">
+        Twitter
+      </div>
+      <div class="column is-half is-full-mobile">
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Type</td>
+            <td>Base stat</td>
+            <td>Average</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let stat of pokemonTypeStat">
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</section>

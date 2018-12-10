@@ -1,4 +1,4 @@
-import {Component, OnChanges, SimpleChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {SearchService} from 'app/search/search.service';
 import 'rxjs-compat/add/operator/share';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,7 +11,7 @@ import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 })
 export class ResultsComponent {
   public pokemonResult: Array<PokemonWithAllProperties>;
-  private query: String;
+  private query: String = '';
 
   constructor(private searchService: SearchService, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -21,6 +21,10 @@ export class ResultsComponent {
     });
   }
 
+  public getPokemonTypes(pokemon: Pokemon.PokemonWithAllProperties): string {
+    return pokemon.types.map(t => t.type.name).join(', ');
+  }
+
   public showDetail(id: number) {
     this.router.navigate(['detail', id]);
   }
@@ -28,9 +32,5 @@ export class ResultsComponent {
   private refreshResult(): void {
     const observable = this.searchService.search(this.query).share();
     observable.subscribe(result => this.pokemonResult = result);
-  }
-
-  getPokemonTypes(pokemon: Pokemon.PokemonWithAllProperties): string {
-    return pokemon.types.map(t => t.type.name).join(', ');
   }
 }

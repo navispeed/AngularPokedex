@@ -16,6 +16,9 @@ import {SearchComponent} from './search/search.component';
 import {RouterModule, Routes} from '@angular/router';
 import {StoreService} from 'app/services/store.service';
 import { DetailComponent } from './search/detail/detail.component';
+import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
+import {NgxTwitterTimelineModule} from 'ngx-twitter-timeline';
+import {ExtractIdFromPokemon} from 'app/utils/ExtractIdFromURL';
 
 const appRoutes: Routes = [
   {path: 'search', component: SearchComponent},
@@ -44,15 +47,17 @@ const appRoutes: Routes = [
     ),
     BrowserModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
     FormsModule,
+    LoadingBarHttpClientModule,
+    MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
     MatIconModule,
+    NgxTwitterTimelineModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [SearchService, PokemonService, StoreService],
+  providers: [SearchService, PokemonService, StoreService, ExtractIdFromPokemon],
   bootstrap: [AppComponent]
 })
 export class AppModule {

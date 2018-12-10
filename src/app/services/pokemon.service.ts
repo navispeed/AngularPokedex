@@ -8,7 +8,6 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment';
 import {StoreService} from 'app/services/store.service';
 import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
-import 'rxjs/add/operator/share';
 
 @Injectable({
   providedIn: 'root'
@@ -18,22 +17,31 @@ export class PokemonService {
   constructor(private http: HttpClient, private storeService: StoreService) {
   }
 
-  public downloadAll(): Observable<any> {
+  public downloadAll(): Observable<PokemonWithAllProperties[]> {
     const observable = this.getPokemonNameList()
       .flatMap(pokemons =>
         forkJoin(pokemons.results.map(pokemon => this.getById(this.extractIdFromPokemon(pokemon)))))
       .share();
+    observable
+      .map(pokemons => pokemons.forEach(p => this.storeService.savePokemonById(p.id, p)))
+      .subscribe(() => this.storeService.save().subscribe());
     return observable;
   }
 
   public getById(id: number): Observable<PokemonWithAllProperties> {
-    return this.storeService.getOrElseGet(id, () => {
+    return this.storeService.getOrElseGetByPokemonId(id, () => {
       const pokemonWithAllPropertiesObservable = this.http
         .get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
         .map((r: PokemonWithAllProperties) => r)
         .share();
       pokemonWithAllPropertiesObservable.map(p => this.storeService.savePokemonById(id, p))
-        .subscribe(() => this.storeService.save());
+        .subscribe(() => {
+          try {
+            this.storeService.save().subscribe();
+          } catch (e) {
+          } // Ignoré
+        })
+      ;
       return pokemonWithAllPropertiesObservable;
     });
   }

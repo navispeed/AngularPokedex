@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from 'app/services/pokemon.service';
+import {StoreService} from 'app/services/store.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,12 @@ import {PokemonService} from 'app/services/pokemon.service';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  constructor(private pokemonService: PokemonService) {
+  constructor(private pokemonService: PokemonService, private storeService: StoreService) {
 
   }
 
   ngOnInit(): void {
+    // this.storeService.load().subscribe(() => this.pokemonService.downloadAll().subscribe(() => console.log('Telechargement ok')));
+    this.storeService.load().subscribe(() => 0);
   }
 }

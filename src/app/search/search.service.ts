@@ -6,6 +6,7 @@ import Pokemon = GetAllPokemonNames.Pokemon;
 import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 import 'rxjs/add/operator/filter';
 import {forkJoin} from 'rxjs/observable/forkJoin';
+import {of} from 'rxjs/observable/of';
 
 
 @Injectable()
@@ -14,7 +15,10 @@ export class SearchService {
   constructor(private pokemonService: PokemonService) {
   }
 
-  public search(query: String): Observable<any> {
+  public search(query: String): Observable<PokemonWithAllProperties[]> {
+    if (!query) {
+      return of([]);
+    }
     return this.pokemonService.getPokemonNameList()
       .map(results => results.results)
       .map(allPokemons => allPokemons.filter(this.match.bind(this, query)))
