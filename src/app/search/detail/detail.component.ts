@@ -32,6 +32,7 @@ export class DetailComponent implements OnInit {
     return 'tag ' + this.detailService.getColorForType(name);
   }
 
-  public formatPokemonStat()
+  public formatPokemonStat() {
+  }
 
 }
