@@ -52,7 +52,7 @@ declare module Pokemon {
     version_group_details: VersionGroupDetail[];
   }
 
-  export interface Species {
+  export interface Specie {
     name: string;
     url: string;
   }
@@ -102,7 +102,7 @@ declare module Pokemon {
     moves: Move[];
     name: string;
     order: number;
-    species: Species;
+    species: Specie;
     sprites: Sprites;
     stats: Stat[];
     types: Type[];

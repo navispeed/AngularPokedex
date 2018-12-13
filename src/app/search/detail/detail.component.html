@@ -12,16 +12,12 @@
               </div>
               <div class="media-content">
                 <p class="title is-4">{{pokemon.name}}</p>
-                <p class="subtitle is-6">{{pokemon.base_experience}}</p>
+                <p class="subtitle is-6">{{pokemon.base_experience}} XP</p>
               </div>
             </div>
 
             <div class="content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-              <a href="#">#css</a> <a href="#">#responsive</a>
-              <br>
-              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+              {{description ? description : 'Loading'}}
             </div>
           </div>
         </div>
@@ -35,14 +31,16 @@
           <tr>
             <td>Type</td>
             <td *ngFor="let s of pokemonTypeStat[0][1]">{{s.stat.name}}</td>
-            <td>Average</td>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let stat of pokemonTypeStat">
-            <td><span [ngClass]="generateClassForType(stat[0])">{{stat[0]}}</span></td>
-            <td></td>
-            <td></td>
+          <tr>
+            <td>{{pokemon.name}}</td>
+            <td *ngFor="let stat of pokemon.stats">{{stat.base_stat}}</td>
+          </tr>
+          <tr *ngFor="let type of pokemonTypeStat">
+            <td><span [ngClass]="generateClassForType(type[0])">{{type[0]}}</span></td>
+            <td *ngFor="let stat of type[1]">{{stat.base_stat}} </td>
           </tr>
           </tbody>
         </table>

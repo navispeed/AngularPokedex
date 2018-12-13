@@ -55,14 +55,18 @@ export class DetailService {
     })))
       .map(tupleTypePlusallPokemonByTypeArray => {
         const retVal: Map<string, Stat[]> = new Map<string, Stat[]>();
-        console.log(tupleTypePlusallPokemonByTypeArray);
+        console.log('makeTypeStat', tupleTypePlusallPokemonByTypeArray);
 
         for (const value of tupleTypePlusallPokemonByTypeArray) {
           retVal.set(value.name, this.extractStatForType(value.associatedPokemons));
         }
         return retVal;
-      });
+      })
+      .map(map => new Map<string, Stat[]>(Array.from(map.entries())));
   }
+
+
+  /*.map(stat => [stat[0], this.statAverage(stat[1])])*/
 
   public getColorForType(typeName: string) {
     return DetailService._color[typeName];
@@ -77,7 +81,7 @@ export class DetailService {
         retVal[index].base_stat += value.base_stat;
       }));
     }
-    retVal.forEach(r => r.base_stat /= pokemonOfType.length);
+    retVal.forEach(r => r.base_stat = Math.round((r.base_stat / pokemonOfType.length) * 100) / 100);
 
     return retVal;
   }

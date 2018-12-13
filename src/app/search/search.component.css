@@ -7,3 +7,7 @@
 .progress {
   border-radius: 0;
 }
+
+section.result {
+  padding-top: 2em;
+}
