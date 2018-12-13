@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import Specie = Pokemon.Species;
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class SpeciesService {
     return specie.flavor_text_entries.filter(f => f.language.name === language)[0].flavor_text;
   }
 
-  public getSpecie(specie: Pokemon.Specie): Observable<Species.RootObject> {
+  public getSpecie(specie: Specie): Observable<Species.RootObject> {
     return this.http.get(specie.url).map((r: Species.RootObject) => r);
   }
 }

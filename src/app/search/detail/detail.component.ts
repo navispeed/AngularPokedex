@@ -5,9 +5,8 @@ import {StatsService} from 'app/services/stats.service';
 import {TypeService} from 'app/services/type.service';
 import {DetailService} from 'app/search/detail/detail.service';
 import 'rxjs-compat/add/observable/empty';
-import {CharacteristicService} from 'app/search/detail/characteristic.service';
-import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 import {SpeciesService} from 'app/search/detail/species.service';
+import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 
 @Component({
   selector: 'app-detail',

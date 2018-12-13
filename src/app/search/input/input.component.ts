@@ -33,7 +33,7 @@ export class InputComponent implements OnInit {
         }
       );
   }
-
+  
   private _filterPokemon(value: string): Observable<PokemonWithPictureUrl[]> {
     const filterValue = value.toLowerCase();
 
