@@ -26,26 +26,50 @@
         Twitter
       </div>
       <div class="column is-full is-full-mobile">
-        <table class="table is-fullwidth">
-          <thead>
-          <tr>
-            <td>Type</td>
-            <td *ngFor="let s of pokemonTypeStat[0][1]">{{s.stat.name}}</td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{pokemon.name}}</td>
-            <td *ngFor="let stat of pokemon.stats">{{stat.base_stat}}</td>
-          </tr>
-          <tr *ngFor="let type of pokemonTypeStat">
-            <td><span [ngClass]="generateClassForType(type[0])">{{type[0]}}</span></td>
-            <td *ngFor="let stat of type[1]">{{stat.base_stat}} </td>
-          </tr>
-          </tbody>
-        </table>
+        <div class="columns">
+          <div class="column is-10">
+            <table class="table is-fullwidth" *ngIf="!graphSwitchChecked">
+              <thead>
+              <tr>
+                <td>Type</td>
+                <td *ngFor="let s of pokemonTypeStat[0][1]">{{s.stat.name}}</td>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{pokemon.name}}</td>
+                <td *ngFor="let stat of pokemon.stats">{{stat.base_stat}}</td>
+              </tr>
+              <tr *ngFor="let type of pokemonTypeStat">
+                <td><span [ngClass]="generateClassForType(type[0])">{{type[0]}}</span></td>
+                <td *ngFor="let stat of type[1]">{{stat.base_stat}}</td>
+              </tr>
+              </tbody>
+            </table>
+            <div *ngIf="graphSwitchChecked" class="is-fullwidth" id="graphContainer">
+              <ngx-charts-bar-vertical-2d
+                [results]="graphStat"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+              >
+              </ngx-charts-bar-vertical-2d>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="field is-pulled-right">
+              <input type="checkbox" name="switchExample" class="switch" id="graphSwitch" #graphSwitch
+                     (change)="graphSwitchChecked = !graphSwitchChecked">
+              <label for="graphSwitch">Graphs</label>
+            </div>
+          </div>
+        </div>
       </div>
-
     </div>
   </div>
 </section>

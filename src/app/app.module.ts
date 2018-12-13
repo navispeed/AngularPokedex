@@ -19,6 +19,7 @@ import { DetailComponent } from './search/detail/detail.component';
 import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {NgxTwitterTimelineModule} from 'ngx-twitter-timeline';
 import {ExtractIdFromPokemon} from 'app/utils/ExtractIdFromURL';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 const appRoutes: Routes = [
   {path: 'search', component: SearchComponent},
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatIconModule,
     NgxTwitterTimelineModule.forRoot(),
+    NgxChartsModule,
     HttpClientModule,
     ReactiveFormsModule
   ],

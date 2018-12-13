@@ -7,6 +7,7 @@ import {DetailService} from 'app/search/detail/detail.service';
 import 'rxjs-compat/add/observable/empty';
 import {SpeciesService} from 'app/search/detail/species.service';
 import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
+import {Graph} from 'app/search/detail/detail.model';
 
 @Component({
   selector: 'app-detail',
@@ -18,7 +19,19 @@ export class DetailComponent implements OnInit {
   public pokemon: PokemonWithAllProperties;
   public pokemonTypeStat: [string, Pokemon.Stat[]][];
   public description: string;
+  public graphSwitchChecked: boolean;
   private id: number;
+
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Category';
+  showYAxisLabel = true;
+  yAxisLabel = 'Points';
+  graphStat: Graph[];
 
   constructor(private route: ActivatedRoute,
               private pokemonService: PokemonService,
@@ -28,13 +41,15 @@ export class DetailComponent implements OnInit {
       this.id = parseInt(this.route.snapshot.params['id'], 10);
       detailService.makeTypeStat(this.id).subscribe(r => {
         this.pokemonTypeStat = Array.from(r.entries());
-        console.log('Stat: ', this.pokemonTypeStat);
+        this.detailService.generateStat(new Map<string, Pokemon.Stat[]>(this.pokemonTypeStat), this.pokemon)
+          .subscribe((graphStat) => this.graphStat = graphStat);
       });
       return pokemonService.getById(this.id);
     }).subscribe(this.onReceivePokemon.bind(this));
   }
 
   ngOnInit() {
+
   }
 
   public generateClassForType(name: string): string {
@@ -46,4 +61,5 @@ export class DetailComponent implements OnInit {
     this.speciesService.getSpecie(pokemon.species).map(specie => this.speciesService.extractDescription(specie, 'en'))
       .subscribe(result => this.description = result);
   }
+
 }

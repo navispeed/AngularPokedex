@@ -4,7 +4,7 @@ import {PokemonService} from 'app/services/pokemon.service';
 import 'rxjs-compat/add/operator/mergeMap';
 import {ExtractIdFromPokemon} from 'app/utils/ExtractIdFromURL';
 import {Observable} from 'rxjs/Observable';
-import {FutureDetailTypeStatTuple} from 'app/search/detail/detail.model';
+import {FutureDetailTypeStatTuple, Graph} from 'app/search/detail/detail.model';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 import Stat = Pokemon.Stat;
@@ -53,11 +53,11 @@ export class DetailService {
         return {name: p.type, associatedPokemons: s};
       });
     })))
-      .map(tupleTypePlusallPokemonByTypeArray => {
+      .map(tupleTypePlusAllPokemonByTypeArray => {
         const retVal: Map<string, Stat[]> = new Map<string, Stat[]>();
-        console.log('makeTypeStat', tupleTypePlusallPokemonByTypeArray);
+        console.log('makeTypeStat', tupleTypePlusAllPokemonByTypeArray);
 
-        for (const value of tupleTypePlusallPokemonByTypeArray) {
+        for (const value of tupleTypePlusAllPokemonByTypeArray) {
           retVal.set(value.name, this.extractStatForType(value.associatedPokemons));
         }
         return retVal;
@@ -65,11 +65,31 @@ export class DetailService {
       .map(map => new Map<string, Stat[]>(Array.from(map.entries())));
   }
 
-
-  /*.map(stat => [stat[0], this.statAverage(stat[1])])*/
-
   public getColorForType(typeName: string) {
     return DetailService._color[typeName];
+  }
+
+  public generateStat(stats: Map<string, Pokemon.Stat[]>, pokemon: Pokemon.PokemonWithAllProperties): Observable<Graph[]> {
+    return new Observable<Graph[]>(subscriber => {
+      const retVal: Graph[] = [{name: pokemon.name, series: []}];
+      const base = retVal[0];
+
+      for (const stat of pokemon.stats) {
+        base.series.push({name: stat.stat.name, value: stat.base_stat});
+      }
+
+      for (const map of Array.from(stats.entries())) {
+        const typeRow: Graph = {name: map[0], series: []};
+
+        for (const stat of map[1]) {
+          typeRow.series.push({name: stat.stat.name, value: stat.base_stat});
+        }
+        retVal.push(typeRow);
+      }
+      console.log('retVal', retVal);
+      subscriber.next(retVal);
+      subscriber.complete();
+    });
   }
 
   private extractStatForType(pokemonOfType: PokemonWithAllProperties[]) {

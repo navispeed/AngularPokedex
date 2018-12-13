@@ -10,3 +10,14 @@ export interface DetailTypeStatTuple {
   type: string;
   associatedPokemons: PokemonWithAllProperties[];
 }
+
+
+export interface Series {
+  name: string;
+  value: number;
+}
+
+export interface Graph {
+  name: string;
+  series: Series[];
+}
