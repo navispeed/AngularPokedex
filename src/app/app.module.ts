@@ -20,6 +20,7 @@ import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {NgxTwitterTimelineModule} from 'ngx-twitter-timeline';
 import {ExtractIdFromPokemon} from 'app/utils/ExtractIdFromURL';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { BookmarkComponent } from './bookmark/bookmark.component';
 
 const appRoutes: Routes = [
   {path: 'search', component: SearchComponent},
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     InputComponent,
     ResultsComponent,
     SearchComponent,
-    DetailComponent
+    DetailComponent,
+    BookmarkComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -59,7 +61,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [SearchService, PokemonService, StoreService, ExtractIdFromPokemon],
+  providers: [SearchService, PokemonService, StoreService, ExtractIdFromPokemon, BookmarkComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

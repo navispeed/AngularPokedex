@@ -6,8 +6,9 @@ import {TypeService} from 'app/services/type.service';
 import {DetailService} from 'app/search/detail/detail.service';
 import 'rxjs-compat/add/observable/empty';
 import {SpeciesService} from 'app/search/detail/species.service';
-import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 import {Graph} from 'app/search/detail/detail.model';
+import {BookmarkService} from 'app/bookmark/bookmark.service';
+import PokemonWithAllProperties = Pokemon.PokemonWithAllProperties;
 
 @Component({
   selector: 'app-detail',
@@ -21,6 +22,7 @@ export class DetailComponent implements OnInit {
   public description: string;
   public graphSwitchChecked: boolean;
   private id: number;
+  isBookmarked: boolean;
 
   // options
   showXAxis = true;
@@ -28,7 +30,7 @@ export class DetailComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Category';
+  xAxisLabel = 'Type';
   showYAxisLabel = true;
   yAxisLabel = 'Points';
   graphStat: Graph[];
@@ -36,7 +38,8 @@ export class DetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private pokemonService: PokemonService,
               private detailService: DetailService,
-              private speciesService: SpeciesService) {
+              private speciesService: SpeciesService,
+              private bookmarkService: BookmarkService) {
     this.route.queryParams.flatMap(() => {
       this.id = parseInt(this.route.snapshot.params['id'], 10);
       detailService.makeTypeStat(this.id).subscribe(r => {
@@ -49,11 +52,15 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   public generateClassForType(name: string): string {
     return 'tag ' + this.detailService.getColorForType(name);
+  }
+
+  public toogleBookmark() {
+    this.bookmarkService.toogle(this.pokemon.id);
+    this.isBookmarked = this.bookmarkService.isSaved(this.pokemon.id);
   }
 
   private onReceivePokemon(pokemon: PokemonWithAllProperties) {

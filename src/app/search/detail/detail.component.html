@@ -13,9 +13,9 @@
               <div class="media-content">
                 <p class="title is-4">{{pokemon.name}}</p>
                 <p class="subtitle is-6">{{pokemon.base_experience}} XP</p>
+                <span (click)="toogleBookmark()" [class]="isBookmarked ? 'fa fa-bookmark is-pokemon' : 'fa fa-bookmark'" ></span>
               </div>
             </div>
-
             <div class="content">
               {{description ? description : 'Loading'}}
             </div>
@@ -56,8 +56,7 @@
                 [showXAxisLabel]="showXAxisLabel"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="xAxisLabel"
-                [yAxisLabel]="yAxisLabel"
-              >
+                [yAxisLabel]="yAxisLabel">
               </ngx-charts-bar-vertical-2d>
             </div>
           </div>

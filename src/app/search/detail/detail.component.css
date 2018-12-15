@@ -2,7 +2,9 @@
   user-select: none;
 }
 
-
+span {
+  cursor: pointer;
+}
 
 #graphContainer {
   height: 50vh;
