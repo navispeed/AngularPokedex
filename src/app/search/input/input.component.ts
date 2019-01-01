@@ -6,6 +6,7 @@ import {of} from 'rxjs';
 import {PokemonService} from 'app/services/pokemon.service';
 import {InputService} from 'app/search/input/input.service';
 import {PokemonWithPictureUrl} from 'app/search/input/input.model';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-input',
@@ -17,7 +18,7 @@ export class InputComponent implements OnInit {
   filteredPokemon: Observable<PokemonWithPictureUrl[]>;
   myControl = new FormControl();
 
-  constructor(private pokemonService: PokemonService, private inputService: InputService) {
+  constructor(private pokemonService: PokemonService, private inputService: InputService, private router: Router) {
   }
 
   ngOnInit() {
@@ -33,7 +34,11 @@ export class InputComponent implements OnInit {
         }
       );
   }
-  
+
+  public onOptionClick(pokemon: PokemonWithPictureUrl) {
+    this.router.navigate(['/search', pokemon.name]);
+  }
+
   private _filterPokemon(value: string): Observable<PokemonWithPictureUrl[]> {
     const filterValue = value.toLowerCase();
 
